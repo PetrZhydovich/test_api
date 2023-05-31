@@ -1,0 +1,9 @@
+address: https://test-stand.gb.ru
+sleep_time: 1
+browser: firefox
+wait: 3
+login: GB2022111948e6
+passwd: e0b16bc18c
+title: Autocreating
+description: post creating in automatically way
+content: Selenium WebDriver.
