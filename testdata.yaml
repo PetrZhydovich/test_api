@@ -1,9 +1,9 @@
 address: https://test-stand.gb.ru
 sleep_time: 1
 browser: firefox
-wait: 3
-login: GB2022111948e6
-passwd: e0b16bc18c
-title: Autocreating
-description: post creating in automatically way
-content: Selenium WebDriver.
+username: NatGlu
+password: db2d28bf9f
+bad_login: test
+name: Glushko Natalya
+email: test@mail.ru
+content: Test information

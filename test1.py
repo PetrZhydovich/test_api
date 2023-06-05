@@ -1,28 +1,40 @@
-from testpage2 import OperationsHelper
-import logging
+import yaml
 import time
+from BaseApp import BasePage
+from testpage2 import Operations
+#from post import SendMail
 
+with open("D:\testing_API/testdata.yaml") as f:
+    testdata = yaml.safe_load(f)
 
-"""Добавить в проект тест по проверке механики работы формы Contact Us на главной странице личного кабинета.
- Должно проверятся открытие формы, ввод данных в поля, клик по кнопке и появление всплывающего alert.
-Совет: переключиться на alert можно командой alert = self.driver.switch_to.alert  Вывести текст alert.text """
+name = testdata["username"]
+passwd = testdata["password"]
 
-
-def test_step1(browser):
+def test_step1(err_401, browser):
+    site = BasePage(browser)
+    site.go_to_site()
+    page = Operations(browser)
+    page.enter_bad_login()
+    page.enter_bad_pass()
+    page.click_login_button()
+    assert page.get_error_text() == err_401
     
-    logging.info('Test Starting')
-    testpage = OperationsHelper(browser)
-    testpage.go_to_site()
-    testpage.enter_login('NatGlu')
-    testpage.enter_pass('db2d28bf9f')
-    testpage.click_login_button()
-    #assert testpage.get_error_text() == "401"
-    testpage.click_contact_button()
+
+def test_step2(hello_user, browser, alert_text):
+    site = BasePage(browser)
+    site.go_to_site()
+    page = Operations(browser)
+    page.enter_good_login()
+    page.enter_good_pass()
+    page.click_login_button()
+    #SendMail()
+    assert page.get_hello_user() == hello_user
+    page.click_contact_button()
     time.sleep(3)
-    testpage.enter_name('Glushko Natalya')
-    testpage.enter_email('test@mail.ru')
-    testpage.enter_content('Test information')
+    page.enter_name()
+    page.enter_email()
+    page.enter_content()
     time.sleep(3)
-    testpage.click_contact_us_button()
+    page.click_contact_us_button()
     time.sleep(3)
-    assert testpage.alert() == 'Form successfully submitted'
+    assert page.alert() == alert_text
